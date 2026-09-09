@@ -46,6 +46,7 @@ addopts = "-q"
 line-length = 100
 target-version = "py311"
 src = ["src", "tests"]
+extend-exclude = ["notebooks"]  # human-run Kaggle scratch cells (§14)
 
 [tool.ruff.lint]
 select = ["E", "F", "W", "I", "UP", "B"]
