@@ -103,13 +103,25 @@ def _get_collection(kb_dir: str | Path):
     )
 
 
+def default_embedder() -> Embedder:
+    """FastEmbedder when fastembed is importable; deterministic HashEmbedder otherwise.
+
+    The offline HashEmbedder fallback is a development convenience only —
+    real semantic retrieval requires the bge-small model (README "Fetch assets").
+    """
+    try:
+        return FastEmbedder()
+    except ImportError:
+        return HashEmbedder()
+
+
 def build(
     guidelines_dir: str | Path,
     kb_dir: str | Path,
     embedder: Embedder | None = None,
 ) -> int:
     """Index every guideline in *guidelines_dir*; return number of chunks stored."""
-    embedder = embedder or FastEmbedder()
+    embedder = embedder or default_embedder()
     docs = sorted(Path(guidelines_dir).glob("*.md"))
     if not docs:
         raise FileNotFoundError(f"no guideline .md files in {guidelines_dir}")

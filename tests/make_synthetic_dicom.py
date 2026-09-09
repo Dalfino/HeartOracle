@@ -35,7 +35,7 @@ HU_BACKGROUND, HU_CAVITY, HU_MYO = 0, 600, 300
 
 PatientID = "SYNTH-0001"
 PatientName = "SYNTHETIC^ORACLE"
-StudyInstanceUID = "1.2.826.0.1.3680043.10.1337.ORACLE.SYNTH.STUDY"
+StudyInstanceUID = "1.2.826.0.1.3680043.10.1337.2026.1"
 
 
 def _taper(i: int, n: int) -> float:
