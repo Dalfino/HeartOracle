@@ -12,10 +12,21 @@ class OracleError(Exception):
     code: str = "E-ORC-000"
     exit_code: int = 1
 
-    def __init__(self, message: str, *, detail: str | None = None) -> None:
+    def __init__(
+        self,
+        message: str,
+        *,
+        detail: str | None = None,
+        code: str | None = None,
+        exit_code: int | None = None,
+    ) -> None:
         super().__init__(message)
         self.message = message
         self.detail = detail
+        if code is not None:
+            self.code = code
+        if exit_code is not None:
+            self.exit_code = exit_code
 
     def to_dict(self) -> dict[str, str | None]:
         return {"code": self.code, "message": self.message, "detail": self.detail}
@@ -24,6 +35,22 @@ class OracleError(Exception):
 class IngestError(OracleError):
     code = "E-ING-000"
     exit_code = 2
+
+
+def e_ing_001(message: str, **kw: str) -> IngestError:
+    return IngestError(message, code="E-ING-001", **kw)
+
+
+def e_ing_002(message: str, **kw: str) -> IngestError:
+    return IngestError(message, code="E-ING-002", **kw)
+
+
+def e_ing_003(message: str, **kw: str) -> IngestError:
+    return IngestError(message, code="E-ING-003", **kw)
+
+
+def e_ing_004(message: str, **kw: str) -> IngestError:
+    return IngestError(message, code="E-ING-004", **kw)
 
 
 class SegError(OracleError):
