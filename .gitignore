@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+.pytest_cache/
+.ruff_cache/
+
+# ORACLE assets — never commit weights, data, or PHI (PRD-002 §15)
+models/
+data/
+kb/
+vault.db
+vault.key
+*.gguf
+*.onnx
+!tests/fixtures/tiny_seg.onnx
+
+# Generated evidence (rebuilt by `oracle validate` / Phase 8 runner)
+VALIDATION_REPORT.md
+bench.json
+
+# Env
+.env
+
+# OS / editor
+.DS_Store
