@@ -118,6 +118,24 @@ def run_pipeline(
             raise OracleError("report audit failed", code="E-SYN-002")
         (data_dir / "seg.json").write_text(json.dumps(seg, indent=2), encoding="utf-8")
         (data_dir / "phy.json").write_text(json.dumps(phy, indent=2), encoding="utf-8")
+        # additive: persist retrieval evidence for the dashboard (not in §6 contract)
+        (data_dir / "chunks.json").write_text(
+            json.dumps(
+                [
+                    {
+                        "guideline_id": c.guideline_id,
+                        "evidence_level": c.evidence_level,
+                        "score": round(c.score, 4),
+                        "issuing_body": c.issuing_body,
+                        "year": c.year,
+                        "text": c.text[:400],
+                    }
+                    for c in chunks
+                ],
+                indent=2,
+            ),
+            encoding="utf-8",
+        )
         job.report = report
         job.status = "done"
     except OracleError as exc:
@@ -159,7 +177,13 @@ def create_app(
             return error_response(404, "E-API-404", f"unknown study {study_id!r}")
         return JSONResponse(
             status_code=200,
-            content={"study_id": study_id, "status": job.status, "error": job.error},
+            content={
+                "study_id": study_id,
+                "status": job.status,
+                "error": job.error,
+                # additive: progress timeline for operators/UI (not in §6 contract)
+                "timeline": job.timeline,
+            },
         )
 
     @app.get("/api/v1/studies/{study_id}/report")

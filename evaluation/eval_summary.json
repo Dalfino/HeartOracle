@@ -1,0 +1,105 @@
+{
+  "model": "AttentionUNet 5-fold logit-mean ensemble (ONNX INT8, CPU)",
+  "n_frames": 30,
+  "n_slices_scored": {
+    "LV": 255,
+    "MYO": 257,
+    "RV": 211
+  },
+  "infer_ms_per_slice": 13445,
+  "per_frame_mean": {
+    "LV": 0.9135,
+    "MYO": 0.8428,
+    "RV": 0.8776
+  },
+  "per_frame_median": {
+    "LV": 0.9414,
+    "MYO": 0.8475,
+    "RV": 0.9145
+  },
+  "per_frame_std": {
+    "LV": 0.0758,
+    "MYO": 0.0402,
+    "RV": 0.0972
+  },
+  "hd95_mean_mm": {
+    "LV": 3.691,
+    "MYO": 4.891,
+    "RV": 5.842
+  },
+  "hd95_p95_mm": {
+    "LV": 8.873,
+    "MYO": 9.559,
+    "RV": 12.73
+  },
+  "hd95_gate_mm": 6.0,
+  "hd95_lv_pass": true,
+  "empty_pred_counts": {
+    "LV": 0,
+    "MYO": 0,
+    "RV": 6
+  },
+  "ef": {
+    "n_patients": 15,
+    "mae_pp": 2.72,
+    "bias_pp": 0.68,
+    "max_abs_pp": 12.32,
+    "unit": "percentage points, predicted minus ground truth"
+  },
+  "frames_with_zero_dice": {
+    "LV": 0,
+    "MYO": 0,
+    "RV": 0
+  },
+  "gates": {
+    "LV": {
+      "single_frame": 0.8907,
+      "ensemble_frame": 0.9135,
+      "single_slice": null,
+      "ensemble_slice": null,
+      "gate": 0.9,
+      "single_pass": false,
+      "ensemble_pass": true
+    },
+    "MYO": {
+      "single_frame": 0.8251,
+      "ensemble_frame": 0.8428,
+      "single_slice": null,
+      "ensemble_slice": null,
+      "gate": 0.82,
+      "single_pass": true,
+      "ensemble_pass": true
+    },
+    "RV": {
+      "single_frame": 0.7896,
+      "ensemble_frame": 0.8776,
+      "single_slice": null,
+      "ensemble_slice": null,
+      "gate": 0.85,
+      "single_pass": false,
+      "ensemble_pass": true
+    }
+  },
+  "single": {
+    "model": "AttentionUNet fold-1 (recorded, prior session, identical protocol)",
+    "recorded_prior_session": true,
+    "per_frame_mean": {
+      "LV": 0.8907,
+      "MYO": 0.8251,
+      "RV": 0.7896
+    },
+    "ensemble_prior": {
+      "LV": 0.8997,
+      "MYO": 0.8473,
+      "RV": 0.8257
+    }
+  },
+  "protocol": {
+    "split": "ACDC official testing patients 101-115 (30 ED/ES frames)",
+    "norm": "minmax01 (B-009)",
+    "resize": "256",
+    "postprocess": "argmax + largest-CC per class at 256, mapped back >0.5",
+    "dice_level": "volume-level (2|\u2229|/(|A|+|B|) over all slices of the frame)",
+    "hd95": "symmetric 95th-percentile surface distance, mm, EDT-based, in-plane spacing"
+  }
+}
