@@ -118,7 +118,7 @@ def main() -> None:
     ef_bias = float(statistics.mean(ef_errors)) if ef_errors else None
     ef_max = float(max(abs(e) for e in ef_errors)) if ef_errors else None
 
-    summary = {
+    ensemble_stats = {
         "model": "AttentionUNet 5-fold logit-mean ensemble (ONNX INT8, CPU)",
         "n_frames": n_frames,
         "n_slices_scored": slices_scored,
@@ -131,15 +131,15 @@ def main() -> None:
         "hd95_gate_mm": HD95_GATE_MM,
         "hd95_lv_pass": bool(hd95_mean_mm["LV"] <= HD95_GATE_MM),
         "empty_pred_counts": inf_counts,
+    }
+    summary = {
+        "ensemble": ensemble_stats,
         "ef": {
             "n_patients": len(ef_errors),
             "mae_pp": round(ef_mae, 2) if ef_mae is not None else None,
             "bias_pp": round(ef_bias, 2) if ef_bias is not None else None,
             "max_abs_pp": round(ef_max, 2) if ef_max is not None else None,
             "unit": "percentage points, predicted minus ground truth",
-        },
-        "frames_with_zero_dice": {
-            c: sum(1 for v in per_frame[c] if v == 0.0) for c in STRUCTS
         },
         "gates": gates,
         "single": {

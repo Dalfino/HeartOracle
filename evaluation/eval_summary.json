@@ -1,43 +1,45 @@
 {
-  "model": "AttentionUNet 5-fold logit-mean ensemble (ONNX INT8, CPU)",
-  "n_frames": 30,
-  "n_slices_scored": {
-    "LV": 255,
-    "MYO": 257,
-    "RV": 211
-  },
-  "infer_ms_per_slice": 13445,
-  "per_frame_mean": {
-    "LV": 0.9135,
-    "MYO": 0.8428,
-    "RV": 0.8776
-  },
-  "per_frame_median": {
-    "LV": 0.9414,
-    "MYO": 0.8475,
-    "RV": 0.9145
-  },
-  "per_frame_std": {
-    "LV": 0.0758,
-    "MYO": 0.0402,
-    "RV": 0.0972
-  },
-  "hd95_mean_mm": {
-    "LV": 3.691,
-    "MYO": 4.891,
-    "RV": 5.842
-  },
-  "hd95_p95_mm": {
-    "LV": 8.873,
-    "MYO": 9.559,
-    "RV": 12.73
-  },
-  "hd95_gate_mm": 6.0,
-  "hd95_lv_pass": true,
-  "empty_pred_counts": {
-    "LV": 0,
-    "MYO": 0,
-    "RV": 6
+  "ensemble": {
+    "model": "AttentionUNet 5-fold logit-mean ensemble (ONNX INT8, CPU)",
+    "n_frames": 30,
+    "n_slices_scored": {
+      "LV": 255,
+      "MYO": 257,
+      "RV": 211
+    },
+    "infer_ms_per_slice": 13445,
+    "per_frame_mean": {
+      "LV": 0.9135,
+      "MYO": 0.8428,
+      "RV": 0.8776
+    },
+    "per_frame_median": {
+      "LV": 0.9414,
+      "MYO": 0.8475,
+      "RV": 0.9145
+    },
+    "per_frame_std": {
+      "LV": 0.0758,
+      "MYO": 0.0402,
+      "RV": 0.0972
+    },
+    "hd95_mean_mm": {
+      "LV": 3.691,
+      "MYO": 4.891,
+      "RV": 5.842
+    },
+    "hd95_p95_mm": {
+      "LV": 8.873,
+      "MYO": 9.559,
+      "RV": 12.73
+    },
+    "hd95_gate_mm": 6.0,
+    "hd95_lv_pass": true,
+    "empty_pred_counts": {
+      "LV": 0,
+      "MYO": 0,
+      "RV": 6
+    }
   },
   "ef": {
     "n_patients": 15,
@@ -45,11 +47,6 @@
     "bias_pp": 0.68,
     "max_abs_pp": 12.32,
     "unit": "percentage points, predicted minus ground truth"
-  },
-  "frames_with_zero_dice": {
-    "LV": 0,
-    "MYO": 0,
-    "RV": 0
   },
   "gates": {
     "LV": {
