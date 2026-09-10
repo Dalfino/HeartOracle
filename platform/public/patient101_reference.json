@@ -1,0 +1,13 @@
+{
+  "patient": "patient101",
+  "EDV_ml": 222.6,
+  "ESV_ml": 156.0,
+  "ejection_fraction": 29.9,
+  "LV_ED_ml": 222.6,
+  "LV_ES_ml": 156.0,
+  "RV_ED_ml": 129.8,
+  "RV_ES_ml": 70.1,
+  "MYO_ED_ml": 127.6,
+  "MYO_ES_ml": 128.8,
+  "note": "ACDC expert manual contours, Simpson slice-summation at native resolution (same formula as the pipeline)."
+}

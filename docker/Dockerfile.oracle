@@ -1,0 +1,40 @@
+# ORACLE analysis API — FastAPI (segmentation, volumetrics, RAG, audit)
+# Built from the HeartOracle repo root (contains src/oracle + requirements.txt).
+# Build:  docker build -f docker/Dockerfile.oracle -t heartoracle-oracle .
+# Run:    docker run -p 3030:3030 -v $HOME/.heartoracle/models:/models heartoracle-oracle
+
+FROM python:3.11-slim AS base
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PIP_NO_CACHE_DIR=1
+
+WORKDIR /app
+
+# system deps for numpy/onnxruntime Wheels already bundled; keep image slim
+RUN apt-get update && apt-get install -y --no-install-recommends \
+      curl \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY src/ ./src/
+COPY tools/ ./tools/
+COPY evaluation/ ./evaluation/
+
+# non-root user
+RUN useradd --system --uid 1001 oracle && mkdir -p /models /data && chown -R oracle:oracle /app /models /data
+USER oracle
+
+ENV ORACLE_MODEL_DIR=/models \
+    ORACLE_DATA_DIR=/data \
+    PORT=3030
+
+EXPOSE 3030
+
+HEALTHCHECK --interval=30s --timeout=5s --start-period=30s --retries=3 \
+  CMD curl -fsS http://127.0.0.1:3030/health || exit 1
+
+# uvicorn entry — adjust module path to the packaged app (src.oracle.api:app)
+CMD ["python", "-m", "uvicorn", "src.oracle.api:app", "--host", "0.0.0.0", "--port", "3030"]

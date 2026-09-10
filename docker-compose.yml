@@ -1,0 +1,51 @@
+# HeartOracle — full-stack composition (platform dashboard + ORACLE analysis API)
+#
+# The ensemble ONNX bundle is NOT baked into images (size + licensing hygiene):
+# mount it read-only at /models for the oracle service.
+#
+#   docker compose up -d
+#   dashboard → http://localhost:3000
+#   oracle    → http://localhost:3030 (health: /health)
+
+services:
+  platform:
+    build:
+      context: ./platform
+      dockerfile: docker/Dockerfile.platform
+    image: heartoracle-platform:0.9
+    container_name: heartoracle-platform
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - ORACLE_API_URL=http://oracle:3030
+    depends_on:
+      oracle:
+        condition: service_healthy
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    read_only: false # Next.js standalone writes cache in-container; tighten with tmpfs mounts in prod
+
+  oracle:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.oracle
+    image: heartoracle-oracle:0.9
+    container_name: heartoracle-oracle
+    ports:
+      - "3030:3030"
+    volumes:
+      - ${ORACLE_MODELS_PATH:-~/.heartoracle/models}:/models:ro
+      - ${ORACLE_DATA_PATH:-~/.heartoracle/data}:/data
+    environment:
+      - ORACLE_MODEL_DIR=/models
+      - ORACLE_DATA_DIR=/data
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    deploy:
+      resources:
+        limits:
+          cpus: "4"
+          memory: 4G

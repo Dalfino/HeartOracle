@@ -7,6 +7,21 @@
 > not a medical device, and must never be used for diagnosis or treatment decisions.
 > All outputs require review by a qualified physician.
 
+## Platform Dashboard (v0.9 — enterprise control tower)
+
+A Dockerized Next.js 16 platform now fronts the ORACLE pipeline:
+measured-results overview (provenance-locked to `evaluation/eval_summary.json`),
+live pipeline demo (real Simpson volumetrics + 5 hash-chained audit gates +
+G5-grounded cited reports), modality-adapter roadmap, **Compliance Center**
+(GMLP gap matrix · ISO 14971 risk register · PCCP draft) and a
+**Security & Governance** center (STRIDE, controls, disclosure policy).
+
+- App source: [`platform/`](platform/) — run `docker compose up` (dashboard :3000, oracle :3030)
+- Documentation: [`docs/`](docs/) — regulatory-by-design evidence base
+- Governance: `docs/governance/AI-GOVERNANCE.md` — ORACLE advises, physicians decide
+
+---
+
 ---
 
 ## Overview

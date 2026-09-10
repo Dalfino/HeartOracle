@@ -25,3 +25,10 @@ bench.json
 
 # OS / editor
 .DS_Store
+
+# --- Platform (Next.js dashboard) ---
+platform/node_modules/
+platform/.next/
+platform/dev.log
+platform/server.log
+platform/*.db
